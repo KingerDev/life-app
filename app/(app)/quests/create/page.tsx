@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useApi } from '@/lib/hooks/useApi';
@@ -21,7 +21,7 @@ import { cn } from '@/lib/utils';
 
 type Step = 'intro' | 'discovery' | 'form' | 'summary';
 
-export default function CreateQuestPage() {
+function CreateQuestPageInner() {
   const router = useRouter();
   const params = useSearchParams();
   const api = useApi();
@@ -262,5 +262,13 @@ export default function CreateQuestPage() {
         </div>
       )}
     </div>
+  );
+}
+
+export default function CreateQuestPage() {
+  return (
+    <Suspense fallback={<div className="h-48 flex items-center justify-center text-muted-foreground">Načítavam...</div>}>
+      <CreateQuestPageInner />
+    </Suspense>
   );
 }

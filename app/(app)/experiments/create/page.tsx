@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useApi } from '@/lib/hooks/useApi';
@@ -27,7 +27,7 @@ function DomainIcon({ iconName, className, style }: { iconName: string; classNam
 
 type WizardStep = 1 | 2 | 3 | 4 | 5 | 6;
 
-export default function CreateExperimentPage() {
+function CreateExperimentPageInner() {
   const router = useRouter();
   const params = useSearchParams();
   const api = useApi();
@@ -355,5 +355,13 @@ export default function CreateExperimentPage() {
         <p className="text-sm text-destructive text-center">Nepodarilo sa vytvoriť experiment</p>
       )}
     </div>
+  );
+}
+
+export default function CreateExperimentPage() {
+  return (
+    <Suspense fallback={<div className="h-48 flex items-center justify-center text-muted-foreground">Načítavam...</div>}>
+      <CreateExperimentPageInner />
+    </Suspense>
   );
 }

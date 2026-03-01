@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useApi } from '@/lib/hooks/useApi';
@@ -29,7 +29,7 @@ function DomainIcon({ iconName, className, style }: { iconName: string; classNam
 
 type Step = 'domain' | 'belief' | 'custom' | 'action' | 'summary';
 
-export default function CreateBeliefPage() {
+function CreateBeliefPageInner() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const api = useApi();
@@ -443,5 +443,13 @@ export default function CreateBeliefPage() {
         </div>
       )}
     </div>
+  );
+}
+
+export default function CreateBeliefPage() {
+  return (
+    <Suspense fallback={<div className="h-48 flex items-center justify-center text-muted-foreground">Načítavam...</div>}>
+      <CreateBeliefPageInner />
+    </Suspense>
   );
 }
