@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Menu, Home, Circle, Brain, FlaskConical, Target } from 'lucide-react';
+import { Menu, Home, Circle, Brain, FlaskConical, Target, CalendarCheck } from 'lucide-react';
 import { useState } from 'react';
 import { cn } from '@/lib/utils';
 import { useModulesStore } from '@/lib/store';
@@ -14,13 +14,14 @@ interface BottomNavItem {
   href: string;
   label: string;
   icon: React.ComponentType<{ className?: string }>;
-  moduleKey?: 'questsEnabled' | 'experimentsEnabled' | 'wheelEnabled' | 'beliefsEnabled';
+  moduleKey?: 'questsEnabled' | 'experimentsEnabled' | 'wheelEnabled' | 'beliefsEnabled' | 'habitsEnabled';
 }
 
 const BOTTOM_NAV: BottomNavItem[] = [
   { href: '/', label: 'Domov', icon: Home },
   { href: '/wheel', label: 'Koleso', icon: Circle, moduleKey: 'wheelEnabled' },
   { href: '/beliefs', label: 'Myseľ', icon: Brain, moduleKey: 'beliefsEnabled' },
+  { href: '/habits', label: 'Návyky', icon: CalendarCheck, moduleKey: 'habitsEnabled' },
   { href: '/experiments', label: 'Exp.', icon: FlaskConical, moduleKey: 'experimentsEnabled' },
   { href: '/quests', label: 'Ciele', icon: Target, moduleKey: 'questsEnabled' },
 ];

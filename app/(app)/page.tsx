@@ -1,6 +1,7 @@
 import { currentUser } from '@clerk/nextjs/server';
 import { WheelCard } from '@/components/dashboard/WheelCard';
 import { BeliefsCard } from '@/components/dashboard/BeliefsCard';
+import { HabitsCard } from '@/components/dashboard/HabitsCard';
 import { ExperimentsCard } from '@/components/dashboard/ExperimentsCard';
 import { QuestsCard } from '@/components/dashboard/QuestsCard';
 
@@ -28,6 +29,7 @@ export default async function DashboardPage() {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <WheelCard />
         <BeliefsCard />
+        <HabitsCard />
         <ExperimentsCard />
         <QuestsCard />
       </div>

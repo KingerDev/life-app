@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(wc -l /Users/martinbalaz/www/next_projects/life-app/components/ui/*.tsx)",
+      "Bash(ls -la /Users/martinbalaz/www/next_projects/life-app/app/\\\\\\(app\\\\\\)/)",
+      "Bash(ls /Users/martinbalaz/www/next_projects/life-app/app/\\\\\\(app\\\\\\)/)",
+      "Bash(ls /Users/martinbalaz/www/next_projects/life-app/app/\\\\\\(app\\\\\\)/experiments/)",
+      "Bash(ls /Users/martinbalaz/www/next_projects/life-app/app/\\\\\\(app\\\\\\)/experiments/[id]/)",
+      "Bash(php artisan migrate)",
+      "Bash(php artisan route:list --path=habits)",
+      "Bash(npx tsc --noEmit)",
+      "Bash(php artisan optimize:clear)",
+      "Bash(php artisan tinker --execute=\"echo json_encode\\(App\\\\Models\\\\Habit::first\\(\\)\\); echo PHP_EOL;\")",
+      "Bash(ls -la /Users/martinbalaz/www/next_projects/life-app/app/\\\\\\(app\\\\\\)/habits/)"
+    ]
+  }
+}
