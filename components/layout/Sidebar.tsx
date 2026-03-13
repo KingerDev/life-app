@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useClerk, useUser } from '@clerk/nextjs';
 import {
-  Home, Circle, Brain, FlaskConical, Target, CalendarCheck,
+  Home, Circle, Brain, FlaskConical, Target, CalendarCheck, CheckSquare,
   Settings, User, LogOut, ChevronRight
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -20,7 +20,7 @@ interface NavItem {
   label: string;
   icon: React.ComponentType<{ className?: string }>;
   color?: string;
-  moduleKey?: 'questsEnabled' | 'experimentsEnabled' | 'wheelEnabled' | 'beliefsEnabled' | 'habitsEnabled';
+  moduleKey?: 'questsEnabled' | 'experimentsEnabled' | 'wheelEnabled' | 'beliefsEnabled' | 'habitsEnabled' | 'todosEnabled';
 }
 
 const NAV_ITEMS: NavItem[] = [
@@ -28,6 +28,7 @@ const NAV_ITEMS: NavItem[] = [
   { href: '/wheel', label: 'Koleso života', icon: Circle, color: '#3b82f6', moduleKey: 'wheelEnabled' },
   { href: '/beliefs', label: 'Presvedčenia', icon: Brain, color: '#3b82f6', moduleKey: 'beliefsEnabled' },
   { href: '/habits', label: 'Návyky', icon: CalendarCheck, color: '#10b981', moduleKey: 'habitsEnabled' },
+  { href: '/todos', label: 'Úlohy', icon: CheckSquare, color: '#f59e0b', moduleKey: 'todosEnabled' },
   { href: '/experiments', label: 'Experimenty', icon: FlaskConical, color: '#8b5cf6', moduleKey: 'experimentsEnabled' },
   { href: '/quests', label: 'Ciele', icon: Target, color: '#8b5cf6', moduleKey: 'questsEnabled' },
 ];

@@ -4,6 +4,7 @@ import { BeliefsCard } from '@/components/dashboard/BeliefsCard';
 import { HabitsCard } from '@/components/dashboard/HabitsCard';
 import { ExperimentsCard } from '@/components/dashboard/ExperimentsCard';
 import { QuestsCard } from '@/components/dashboard/QuestsCard';
+import { TodosCard } from '@/components/dashboard/TodosCard';
 
 export default async function DashboardPage() {
   const user = await currentUser();
@@ -30,6 +31,7 @@ export default async function DashboardPage() {
         <WheelCard />
         <BeliefsCard />
         <HabitsCard />
+        <TodosCard />
         <ExperimentsCard />
         <QuestsCard />
       </div>

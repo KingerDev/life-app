@@ -2,7 +2,7 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useModulesStore } from '@/lib/store';
-import { Circle, Brain, FlaskConical, Target, CalendarCheck } from 'lucide-react';
+import { Circle, Brain, FlaskConical, Target, CalendarCheck, CheckSquare } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface ModuleToggleProps {
@@ -50,8 +50,8 @@ function ModuleToggle({ label, description, icon: Icon, color, enabled, onToggle
 
 export default function SettingsPage() {
   const {
-    wheelEnabled, beliefsEnabled, habitsEnabled, experimentsEnabled, questsEnabled,
-    toggleWheel, toggleBeliefs, toggleHabits, toggleExperiments, toggleQuests,
+    wheelEnabled, beliefsEnabled, habitsEnabled, experimentsEnabled, questsEnabled, todosEnabled,
+    toggleWheel, toggleBeliefs, toggleHabits, toggleExperiments, toggleQuests, toggleTodos,
   } = useModulesStore();
 
   return (
@@ -90,6 +90,14 @@ export default function SettingsPage() {
             color="#10b981"
             enabled={habitsEnabled}
             onToggle={toggleHabits}
+          />
+          <ModuleToggle
+            label="Úlohy"
+            description="Denné úlohy, projekty a subtasks"
+            icon={CheckSquare}
+            color="#f59e0b"
+            enabled={todosEnabled}
+            onToggle={toggleTodos}
           />
           <ModuleToggle
             label="Experimenty"

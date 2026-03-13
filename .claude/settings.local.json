@@ -11,7 +11,20 @@
       "Bash(npx tsc --noEmit)",
       "Bash(php artisan optimize:clear)",
       "Bash(php artisan tinker --execute=\"echo json_encode\\(App\\\\Models\\\\Habit::first\\(\\)\\); echo PHP_EOL;\")",
-      "Bash(ls -la /Users/martinbalaz/www/next_projects/life-app/app/\\\\\\(app\\\\\\)/habits/)"
+      "Bash(ls -la /Users/martinbalaz/www/next_projects/life-app/app/\\\\\\(app\\\\\\)/habits/)",
+      "Read(//usr/local/bin/**)",
+      "Read(//opt/homebrew/bin/**)",
+      "Bash(/opt/homebrew/bin/php artisan migrate)",
+      "Bash(/opt/homebrew/bin/php artisan route:list --path=todo)",
+      "Bash(/opt/homebrew/bin/npx tsc --noEmit)",
+      "Bash(/Users/martinbalaz/.nvm/versions/node/v22.16.0/bin/npx tsc --noEmit)",
+      "Bash(/Users/martinbalaz/.nvm/versions/node/v22.16.0/bin/node /Users/martinbalaz/.nvm/versions/node/v22.16.0/bin/npx tsc --noEmit)",
+      "Bash(PATH=\"/Users/martinbalaz/.nvm/versions/node/v22.16.0/bin:$PATH\" npx tsc --noEmit)",
+      "Bash(PATH=\"/Users/martinbalaz/.nvm/versions/node/v22.16.0/bin:$PATH\" npx shadcn@latest add alert-dialog --yes)",
+      "Bash(PATH=\"/Users/martinbalaz/.nvm/versions/node/v22.16.0/bin:$PATH\" npx shadcn@latest add alert-dialog --yes --overwrite)",
+      "Bash(PATH=\"/Users/martinbalaz/.nvm/versions/node/v22.16.0/bin:$PATH\" npx shadcn@latest add alert-dialog)",
+      "Bash(PATH=\"/Users/martinbalaz/.nvm/versions/node/v22.16.0/bin:$PATH\" node -e \"const r = require\\(''radix-ui''\\); console.log\\(Object.keys\\(r\\).filter\\(k => k.toLowerCase\\(\\).includes\\(''alert''\\)\\)\\)\")",
+      "mcp__Claude_Preview__preview_start"
     ]
   }
 }
