@@ -26,7 +26,7 @@ export function QuestsCard() {
   const quarter = getCurrentQuarter();
 
   return (
-    <Card className="overflow-hidden">
+    <Card className="overflow-hidden h-full">
       <CardHeader className="flex flex-row items-center justify-between pb-2">
         <div className="flex items-center gap-2">
           <Target className="size-5 text-violet-400" />

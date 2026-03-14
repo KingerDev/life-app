@@ -7,6 +7,7 @@ import { createAssessmentsApi } from '@/lib/api/assessments';
 import { createBeliefsApi } from '@/lib/api/beliefs';
 import { createExperimentsApi } from '@/lib/api/experiments';
 import { createHabitsApi } from '@/lib/api/habits';
+import { createNotesApi } from '@/lib/api/notes';
 import { createQuestsApi } from '@/lib/api/quests';
 import { createTodosApi } from '@/lib/api/todos';
 
@@ -20,6 +21,7 @@ export function useApi() {
       beliefs: createBeliefsApi(client),
       experiments: createExperimentsApi(client),
       habits: createHabitsApi(client),
+      notes: createNotesApi(client),
       quests: createQuestsApi(client),
       todos: createTodosApi(client),
     };

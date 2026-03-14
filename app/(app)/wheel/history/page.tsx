@@ -59,7 +59,7 @@ export default function WheelHistoryPage() {
               <Card key={assessment.id}>
                 <CardHeader className="pb-3">
                   <div className="flex items-center justify-between">
-                    <CardTitle className="text-base">
+                    <CardTitle className="text-base text-foreground">
                       {formatDate(assessment.weekStart)} – {formatDate(assessment.weekEnd)}
                     </CardTitle>
                     <span className="text-lg font-bold text-blue-400">Ø {avg}/10</span>

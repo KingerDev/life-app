@@ -17,6 +17,15 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: 'Life App',
   description: 'Osobný rozvoj - Experimenty, Presvedčenia, Ciele, Koleso života',
+  manifest: '/manifest.webmanifest',
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: 'black-translucent',
+    title: 'Life App',
+  },
+  other: {
+    'mobile-web-app-capable': 'yes',
+  },
 };
 
 export default function RootLayout({
@@ -27,6 +36,10 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="sk" className="dark">
+        <head>
+          <meta name="theme-color" content="#0a0a0a" />
+          <link rel="apple-touch-icon" href="/icon-192.png" />
+        </head>
         <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
           <Providers>{children}</Providers>
         </body>

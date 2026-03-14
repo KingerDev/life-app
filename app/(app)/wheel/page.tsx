@@ -1,6 +1,6 @@
 'use client';
 
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import { useApi } from '@/lib/hooks/useApi';
 import { LIFE_ASPECTS } from '@/types/wheel-of-life';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -8,25 +8,22 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import {
   RadarChart, PolarGrid, PolarAngleAxis, Radar,
-  ResponsiveContainer, Tooltip, Legend
+  ResponsiveContainer, Tooltip
 } from 'recharts';
 import Link from 'next/link';
-import { History, Plus, RefreshCw, ChevronRight } from 'lucide-react';
+import { History, Plus, ChevronRight } from 'lucide-react';
+import { format } from 'date-fns';
+import { sk } from 'date-fns/locale';
 
 export default function WheelPage() {
   const api = useApi();
-  const queryClient = useQueryClient();
 
-  const { data: assessment, isLoading, refetch } = useQuery({
-    queryKey: ['wheel', 'current-week'],
-    queryFn: () => api.assessments.getCurrentWeek(),
-  });
-
-  const { data: history } = useQuery({
+  const { data: history, isLoading } = useQuery({
     queryKey: ['wheel', 'history'],
     queryFn: () => api.assessments.getAll(1),
   });
 
+  const assessment = history?.data?.[0] ?? null;
   const previousAssessment = history?.data?.[1] ?? null;
 
   const chartData = LIFE_ASPECTS.map(aspect => {
@@ -59,21 +56,12 @@ export default function WheelPage() {
               História
             </Button>
           </Link>
-          {assessment ? (
-            <Link href="/wheel/assess">
-              <Button size="sm" className="gap-2">
-                <RefreshCw className="size-4" />
-                Aktualizovať
-              </Button>
-            </Link>
-          ) : (
-            <Link href="/wheel/assess">
-              <Button size="sm" className="gap-2">
-                <Plus className="size-4" />
-                Nové hodnotenie
-              </Button>
-            </Link>
-          )}
+          <Link href="/wheel/assess">
+            <Button size="sm" className="gap-2">
+              <Plus className="size-4" />
+              Hodnotiť týždeň
+            </Button>
+          </Link>
         </div>
       </div>
 
@@ -86,7 +74,14 @@ export default function WheelPage() {
           {/* Radar Chart */}
           <Card>
             <CardHeader className="flex flex-row items-center justify-between">
-              <CardTitle>Prehľad týždenného hodnotenia</CardTitle>
+              <div>
+                <CardTitle>Prehľad týždenného hodnotenia</CardTitle>
+                {assessment?.weekStart && (
+                  <p className="text-xs text-muted-foreground mt-1">
+                    {format(new Date(assessment.weekStart), 'd. MMM', { locale: sk })} – {format(new Date(assessment.weekEnd), 'd. MMM yyyy', { locale: sk })}
+                  </p>
+                )}
+              </div>
               {avgScore !== null && (
                 <Badge variant="secondary" className="text-lg px-3 py-1">
                   Ø {avgScore}/10
@@ -96,10 +91,10 @@ export default function WheelPage() {
             <CardContent>
               <ResponsiveContainer width="100%" height={320}>
                 <RadarChart data={chartData} margin={{ top: 20, right: 40, bottom: 20, left: 40 }}>
-                  <PolarGrid stroke="hsl(var(--border))" />
+                  <PolarGrid stroke="#374151" />
                   <PolarAngleAxis
                     dataKey="aspect"
-                    tick={{ fill: 'hsl(var(--muted-foreground))', fontSize: 12 }}
+                    tick={{ fill: '#9ca3af', fontSize: 12 }}
                   />
                   <Tooltip
                     content={({ active, payload }) => {
@@ -122,9 +117,9 @@ export default function WheelPage() {
                     <Radar
                       name="Predchádzajúci týždeň"
                       dataKey="previous"
-                      stroke="hsl(var(--muted-foreground))"
-                      fill="hsl(var(--muted-foreground))"
-                      fillOpacity={0.1}
+                      stroke="#6b7280"
+                      fill="#6b7280"
+                      fillOpacity={0.15}
                       strokeDasharray="5 5"
                     />
                   )}
@@ -136,9 +131,20 @@ export default function WheelPage() {
                     fillOpacity={0.25}
                     dot={{ fill: '#3b82f6', r: 4 }}
                   />
-                  {previousAssessment && <Legend />}
                 </RadarChart>
               </ResponsiveContainer>
+              {previousAssessment && (
+                <div className="flex items-center justify-center gap-6 mt-4 text-sm text-muted-foreground">
+                  <div className="flex items-center gap-2">
+                    <div className="w-4 h-0.5 bg-[#6b7280]" style={{ borderTop: '2px dashed #6b7280' }} />
+                    <span>Predchádzajúci týždeň</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <div className="w-4 h-0.5 bg-blue-500" />
+                    <span>Tento týždeň</span>
+                  </div>
+                </div>
+              )}
             </CardContent>
           </Card>
 

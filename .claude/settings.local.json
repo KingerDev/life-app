@@ -24,7 +24,19 @@
       "Bash(PATH=\"/Users/martinbalaz/.nvm/versions/node/v22.16.0/bin:$PATH\" npx shadcn@latest add alert-dialog --yes --overwrite)",
       "Bash(PATH=\"/Users/martinbalaz/.nvm/versions/node/v22.16.0/bin:$PATH\" npx shadcn@latest add alert-dialog)",
       "Bash(PATH=\"/Users/martinbalaz/.nvm/versions/node/v22.16.0/bin:$PATH\" node -e \"const r = require\\(''radix-ui''\\); console.log\\(Object.keys\\(r\\).filter\\(k => k.toLowerCase\\(\\).includes\\(''alert''\\)\\)\\)\")",
-      "mcp__Claude_Preview__preview_start"
+      "mcp__Claude_Preview__preview_start",
+      "Bash(ls -la /Users/martinbalaz/www/next_projects/life-app/app/\\\\\\(app\\\\\\)/todos/)",
+      "Bash(head -50 /Users/martinbalaz/www/next_projects/life-app/app/\\\\\\(app\\\\\\)/habits/page.tsx)",
+      "Bash(npm install:*)",
+      "Bash(php artisan:*)",
+      "Bash(grep -n \"overflow\" /Users/martinbalaz/www/next_projects/life-app/components/dashboard/*.tsx)",
+      "Bash(grep -r \"service.?worker\\\\|push.*notification\\\\|workbox\\\\|pwa\" /Users/martinbalaz/www/next_projects/life-app/app --include=*.ts --include=*.tsx --include=*.js)",
+      "Bash(grep -r \"manifest\\\\|pwa\\\\|notification\\\\|service.?worker\" /Users/martinbalaz/www/next_projects/life-app --include=*.json --include=*.ts --include=*.tsx --include=*.js --exclude-dir=node_modules)",
+      "Bash(ls \"/Users/martinbalaz/www/next_projects/life-app/app/\\(app\\)/\")",
+      "Bash(convert --version)",
+      "Bash(node -e \":*)",
+      "Bash(__NEW_LINE_5e9b1448eda01f52__ node:*)",
+      "Bash(composer require:*)"
     ]
   }
 }

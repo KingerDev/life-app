@@ -5,7 +5,7 @@ import { usePathname } from 'next/navigation';
 import { useClerk, useUser } from '@clerk/nextjs';
 import {
   Home, Circle, Brain, FlaskConical, Target, CalendarCheck, CheckSquare,
-  Settings, User, LogOut, ChevronRight
+  FileText, Settings, User, LogOut, ChevronRight
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useModulesStore } from '@/lib/store';
@@ -20,7 +20,7 @@ interface NavItem {
   label: string;
   icon: React.ComponentType<{ className?: string }>;
   color?: string;
-  moduleKey?: 'questsEnabled' | 'experimentsEnabled' | 'wheelEnabled' | 'beliefsEnabled' | 'habitsEnabled' | 'todosEnabled';
+  moduleKey?: 'questsEnabled' | 'experimentsEnabled' | 'wheelEnabled' | 'beliefsEnabled' | 'habitsEnabled' | 'todosEnabled' | 'notesEnabled';
 }
 
 const NAV_ITEMS: NavItem[] = [
@@ -30,6 +30,7 @@ const NAV_ITEMS: NavItem[] = [
   { href: '/habits', label: 'Návyky', icon: CalendarCheck, color: '#10b981', moduleKey: 'habitsEnabled' },
   { href: '/todos', label: 'Úlohy', icon: CheckSquare, color: '#f59e0b', moduleKey: 'todosEnabled' },
   { href: '/experiments', label: 'Experimenty', icon: FlaskConical, color: '#8b5cf6', moduleKey: 'experimentsEnabled' },
+  { href: '/notes', label: 'Poznámky', icon: FileText, color: '#8b5cf6', moduleKey: 'notesEnabled' },
   { href: '/quests', label: 'Ciele', icon: Target, color: '#8b5cf6', moduleKey: 'questsEnabled' },
 ];
 

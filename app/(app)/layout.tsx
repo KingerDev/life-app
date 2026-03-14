@@ -1,9 +1,11 @@
 import { Sidebar } from '@/components/layout/Sidebar';
 import { MobileNav } from '@/components/layout/MobileNav';
+import { OneSignalInit } from '@/components/OneSignalInit';
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className="min-h-screen bg-background">
+      <OneSignalInit />
       {/* Desktop sidebar */}
       <div className="hidden lg:block">
         <Sidebar />

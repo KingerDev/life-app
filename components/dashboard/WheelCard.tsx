@@ -8,6 +8,8 @@ import { Button } from '@/components/ui/button';
 import { RadarChart, PolarGrid, PolarAngleAxis, Radar, ResponsiveContainer, Tooltip } from 'recharts';
 import { LIFE_ASPECTS } from '@/types/wheel-of-life';
 import { ChevronRight, Circle } from 'lucide-react';
+import { format } from 'date-fns';
+import { sk } from 'date-fns/locale';
 import Link from 'next/link';
 
 export function WheelCard() {
@@ -15,8 +17,8 @@ export function WheelCard() {
   const { wheelEnabled } = useModulesStore();
 
   const { data: assessment, isLoading } = useQuery({
-    queryKey: ['wheel', 'current-week'],
-    queryFn: () => api.assessments.getCurrentWeek(),
+    queryKey: ['wheel', 'latest'],
+    queryFn: () => api.assessments.getLatest(),
     enabled: wheelEnabled,
   });
 
@@ -34,7 +36,7 @@ export function WheelCard() {
     : null;
 
   return (
-    <Card className="overflow-hidden">
+    <Card className="overflow-hidden h-full">
       <CardHeader className="flex flex-row items-center justify-between pb-2">
         <div className="flex items-center gap-2">
           <Circle className="size-5 text-blue-400" />
@@ -54,15 +56,22 @@ export function WheelCard() {
         ) : assessment ? (
           <div className="space-y-4">
             <div className="flex items-center justify-between">
-              <span className="text-sm text-muted-foreground">Priemerné skóre</span>
+              <div>
+                <span className="text-sm text-muted-foreground">Priemerné skóre</span>
+                {assessment.weekStart && (
+                  <p className="text-xs text-muted-foreground mt-0.5">
+                    {format(new Date(assessment.weekStart), 'd. MMM', { locale: sk })} – {format(new Date(assessment.weekEnd), 'd. MMM yyyy', { locale: sk })}
+                  </p>
+                )}
+              </div>
               <span className="text-2xl font-bold text-blue-400">{avgScore}/10</span>
             </div>
             <ResponsiveContainer width="100%" height={220}>
               <RadarChart data={chartData} margin={{ top: 10, right: 30, bottom: 10, left: 30 }}>
-                <PolarGrid stroke="hsl(var(--border))" />
+                <PolarGrid stroke="#374151" />
                 <PolarAngleAxis
                   dataKey="aspect"
-                  tick={{ fill: 'hsl(var(--muted-foreground))', fontSize: 11 }}
+                  tick={{ fill: '#9ca3af', fontSize: 11 }}
                 />
                 <Tooltip
                   content={({ active, payload }) => {
