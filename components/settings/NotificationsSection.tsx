@@ -8,7 +8,7 @@ import { cn } from '@/lib/utils';
 import { useModulesStore, NotificationPrefs } from '@/lib/store';
 
 const DAYS = ['Ne', 'Po', 'Ut', 'St', 'Šv', 'Pi', 'So'];
-const TIMES = ['07:00', '08:00', '09:00', '10:00', '12:00', '18:00', '19:00', '20:00', '21:00', '22:00'];
+const TIMES = Array.from({ length: 24 }, (_, h) => `${String(h).padStart(2, '0')}:00`);
 const DEADLINE_OPTIONS = [
   { value: 0, label: 'V deň termínu' },
   { value: 1, label: '1 deň vopred' },
