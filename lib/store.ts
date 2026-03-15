@@ -75,6 +75,24 @@ export const useModulesStore = create<ModulesState>()(
       setNotificationPrefs: (prefs) =>
         set((state) => ({ notificationPrefs: { ...state.notificationPrefs, ...prefs } })),
     }),
-    { name: 'life-app-modules' }
+    {
+      name: 'life-app-modules',
+      version: 2,
+      migrate: (persisted: any, version: number) => {
+        // Reset on old versions so missing fields get defaults
+        if (version < 2) return {};
+        return persisted;
+      },
+      merge: (persisted: any, current) => ({
+        ...current,
+        ...persisted,
+        // Deep merge nested objects so new fields always get defaults
+        notificationPrefs: {
+          ...current.notificationPrefs,
+          ...(persisted?.notificationPrefs ?? {}),
+        },
+        moduleOrder: persisted?.moduleOrder ?? current.moduleOrder,
+      }),
+    }
   )
 );
