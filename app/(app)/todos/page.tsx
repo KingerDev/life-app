@@ -9,10 +9,12 @@ import { TodoItem } from '@/components/todos/TodoItem';
 import { TodoQuickAdd } from '@/components/todos/TodoQuickAdd';
 import { CheckSquare, Plus, AlertCircle } from 'lucide-react';
 import Link from 'next/link';
+import { HABIT_ASPECTS } from '@/types/habits';
 
 export default function TodosPage() {
   const api = useApi();
   const [activeTab, setActiveTab] = useState<'today' | 'all'>('today');
+  const [aspectFilter, setAspectFilter] = useState<string | null>(null);
 
   const { data: todayData, isLoading } = useQuery({
     queryKey: ['todos', 'today'],
@@ -20,14 +22,21 @@ export default function TodosPage() {
   });
 
   const { data: allData, isLoading: isLoadingAll } = useQuery({
-    queryKey: ['todos', 'list'],
-    queryFn: () => api.todos.getAll(),
+    queryKey: ['todos', 'list', aspectFilter],
+    queryFn: () => api.todos.getAll(undefined, aspectFilter ?? undefined),
     enabled: activeTab === 'all',
   });
 
-  const overdueCount = todayData?.overdue.length ?? 0;
-  const todayCount = todayData?.dueToday.length ?? 0;
-  const completedTodayCount = todayData?.completedToday.length ?? 0;
+  // Client-side aspect filter for Today tab
+  const filterByAspect = <T extends { aspectId?: string }>(items: T[]) =>
+    aspectFilter ? items.filter(t => t.aspectId === aspectFilter) : items;
+
+  const overdueItems = filterByAspect(todayData?.overdue ?? []);
+  const dueTodayItems = filterByAspect(todayData?.dueToday ?? []);
+  const completedTodayItems = filterByAspect(todayData?.completedToday ?? []);
+  const overdueCount = overdueItems.length;
+  const todayCount = dueTodayItems.length;
+  const completedTodayCount = completedTodayItems.length;
   const totalToday = overdueCount + todayCount;
 
   if (isLoading) {
@@ -50,6 +59,36 @@ export default function TodosPage() {
             Nová úloha
           </Button>
         </Link>
+      </div>
+
+      {/* Aspect filter */}
+      <div className="flex gap-2 flex-wrap">
+        <button
+          type="button"
+          onClick={() => setAspectFilter(null)}
+          className={`text-xs px-3 py-1.5 rounded-full border transition-colors ${
+            aspectFilter === null
+              ? 'bg-primary text-primary-foreground border-primary'
+              : 'border-border text-muted-foreground hover:border-foreground'
+          }`}
+        >
+          Všetky
+        </button>
+        {HABIT_ASPECTS.map(aspect => (
+          <button
+            key={aspect.id}
+            type="button"
+            onClick={() => setAspectFilter(aspectFilter === aspect.id ? null : aspect.id)}
+            className={`text-xs px-3 py-1.5 rounded-full border transition-colors ${
+              aspectFilter === aspect.id
+                ? 'text-white border-transparent'
+                : 'border-border text-muted-foreground hover:border-foreground'
+            }`}
+            style={aspectFilter === aspect.id ? { backgroundColor: aspect.color } : {}}
+          >
+            {aspect.label}
+          </button>
+        ))}
       </div>
 
       {/* Tabs */}
@@ -113,7 +152,7 @@ export default function TodosPage() {
                   </p>
                 </div>
                 <div className="divide-y divide-border">
-                  {todayData?.overdue.map(todo => (
+                  {overdueItems.map(todo => (
                     <TodoItem key={todo.id} todo={todo} queryKey={['todos', 'today']} />
                   ))}
                 </div>
@@ -133,7 +172,7 @@ export default function TodosPage() {
                       </p>
                     </div>
                     <div className="divide-y divide-border">
-                      {todayData?.dueToday.map(todo => (
+                      {dueTodayItems.map(todo => (
                         <TodoItem key={todo.id} todo={todo} queryKey={['todos', 'today']} />
                       ))}
                     </div>
@@ -149,7 +188,7 @@ export default function TodosPage() {
                       </p>
                     </div>
                     <div className="divide-y divide-border">
-                      {todayData?.completedToday.map(todo => (
+                      {completedTodayItems.map(todo => (
                         <TodoItem key={todo.id} todo={todo} queryKey={['todos', 'today']} />
                       ))}
                     </div>

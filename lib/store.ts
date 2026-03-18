@@ -40,6 +40,7 @@ interface ModulesState {
   todosEnabled: boolean;
   notesEnabled: boolean;
   moduleOrder: ModuleId[];
+  tabBarPins: string[]; // ordered hrefs pinned to mobile tab bar (excl. '/'), max 4
   notificationPrefs: NotificationPrefs;
   toggleQuests: () => void;
   toggleExperiments: () => void;
@@ -49,6 +50,7 @@ interface ModulesState {
   toggleTodos: () => void;
   toggleNotes: () => void;
   setModuleOrder: (order: ModuleId[]) => void;
+  setTabBarPins: (pins: string[]) => void;
   setNotificationPrefs: (prefs: Partial<NotificationPrefs>) => void;
 }
 
@@ -63,6 +65,7 @@ export const useModulesStore = create<ModulesState>()(
       todosEnabled: true,
       notesEnabled: true,
       moduleOrder: DEFAULT_MODULE_ORDER,
+      tabBarPins: ['/wheel', '/beliefs', '/habits', '/todos'],
       notificationPrefs: DEFAULT_NOTIFICATION_PREFS,
       toggleQuests: () => set((state) => ({ questsEnabled: !state.questsEnabled })),
       toggleExperiments: () => set((state) => ({ experimentsEnabled: !state.experimentsEnabled })),
@@ -72,15 +75,16 @@ export const useModulesStore = create<ModulesState>()(
       toggleTodos: () => set((state) => ({ todosEnabled: !state.todosEnabled })),
       toggleNotes: () => set((state) => ({ notesEnabled: !state.notesEnabled })),
       setModuleOrder: (order) => set({ moduleOrder: order }),
+      setTabBarPins: (pins) => set({ tabBarPins: pins }),
       setNotificationPrefs: (prefs) =>
         set((state) => ({ notificationPrefs: { ...state.notificationPrefs, ...prefs } })),
     }),
     {
       name: 'life-app-modules',
-      version: 2,
+      version: 3,
       migrate: (persisted: any, version: number) => {
-        // Reset on old versions so missing fields get defaults
         if (version < 2) return {};
+        if (version < 3) return { ...persisted, tabBarPins: ['/wheel', '/beliefs', '/habits', '/todos'] };
         return persisted;
       },
       merge: (persisted: any, current) => ({
@@ -92,6 +96,7 @@ export const useModulesStore = create<ModulesState>()(
           ...(persisted?.notificationPrefs ?? {}),
         },
         moduleOrder: persisted?.moduleOrder ?? current.moduleOrder,
+        tabBarPins: persisted?.tabBarPins ?? current.tabBarPins,
       }),
     }
   )

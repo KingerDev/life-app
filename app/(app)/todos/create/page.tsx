@@ -12,6 +12,8 @@ import { ArrowLeft, Loader2 } from 'lucide-react';
 import Link from 'next/link';
 import { PRIORITY_OPTIONS } from '@/types/todos';
 import type { TodoPriority } from '@/types/todos';
+import { HABIT_ASPECTS } from '@/types/habits';
+import type { HabitAspectId } from '@/types/habits';
 import { cn } from '@/lib/utils';
 
 export default function CreateTodoPage() {
@@ -23,6 +25,7 @@ export default function CreateTodoPage() {
   const [description, setDescription] = useState('');
   const [dueDate, setDueDate] = useState('');
   const [priority, setPriority] = useState<TodoPriority>('none');
+  const [aspectId, setAspectId] = useState<HabitAspectId | ''>('');
   const [listId, setListId] = useState<string>('');
 
   const { data: lists } = useQuery({
@@ -36,6 +39,7 @@ export default function CreateTodoPage() {
       description: description.trim() || undefined,
       dueDate: dueDate || undefined,
       priority,
+      aspectId: aspectId || undefined,
       listId: listId || undefined,
     }),
     onSuccess: () => {
@@ -116,6 +120,29 @@ export default function CreateTodoPage() {
                   style={priority === option.id ? { backgroundColor: option.color } : {}}
                 >
                   {option.label}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Aspect (Wheel of Life) */}
+          <div className="space-y-1.5">
+            <label className="text-sm font-medium">Oblasť života (voliteľné)</label>
+            <div className="flex gap-2 flex-wrap">
+              {HABIT_ASPECTS.map(aspect => (
+                <button
+                  key={aspect.id}
+                  type="button"
+                  onClick={() => setAspectId(aspectId === aspect.id ? '' : aspect.id)}
+                  className={cn(
+                    'px-3 py-1.5 rounded-full text-xs border transition-all',
+                    aspectId === aspect.id
+                      ? 'text-white border-transparent'
+                      : 'border-border text-muted-foreground hover:border-foreground/30'
+                  )}
+                  style={aspectId === aspect.id ? { backgroundColor: aspect.color } : {}}
+                >
+                  {aspect.label}
                 </button>
               ))}
             </div>

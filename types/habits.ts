@@ -100,6 +100,7 @@ export interface PaginatedHabitsResponse {
 export interface HeatmapDay {
   date: string; // 'YYYY-MM-DD'
   completed: boolean;
+  hasEntry: boolean; // true = entry exists in DB (completed or explicitly missed)
   note?: string;
   isToday: boolean;
   isFuture: boolean;
@@ -159,6 +160,7 @@ export function buildHeatmapData(entries: HabitEntry[], weeksBack = 26): Heatmap
     days.push({
       date: dateStr,
       completed: entry?.completed ?? false,
+      hasEntry: entry !== undefined,
       note: entry?.note,
       isToday: dateStr === todayStr,
       isFuture,

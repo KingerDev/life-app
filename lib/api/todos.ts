@@ -133,8 +133,10 @@ export function createTodosApi(client: AxiosInstance) {
 
     // ── Todos ───────────────────────────────────────────────────────────────
 
-    async getAll(listId?: string): Promise<PaginatedTodosResponse> {
-      const params = listId ? { list_id: listId } : {};
+    async getAll(listId?: string, aspectId?: string): Promise<PaginatedTodosResponse> {
+      const params: Record<string, string> = {};
+      if (listId) params.list_id = listId;
+      if (aspectId) params.aspect_id = aspectId;
       const res = await client.get('/api/todos', { params });
       return {
         data: res.data.data.map(normalizeTodo),

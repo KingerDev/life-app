@@ -7,6 +7,7 @@ import { Circle, Brain, FlaskConical, Target, CalendarCheck, CheckSquare, FileTe
 import { cn } from '@/lib/utils';
 import Link from 'next/link';
 import { NotificationsSection } from '@/components/settings/NotificationsSection';
+import { TabBarSection } from '@/components/settings/TabBarSection';
 
 interface ModuleToggleProps {
   label: string;
@@ -79,6 +80,8 @@ export default function SettingsPage() {
           <ModuleToggle label="Ciele" description="Štvrťročné ciele pre prácu a život" icon={Target} color="#8b5cf6" enabled={questsEnabled} onToggle={toggleQuests} />
         </CardContent>
       </Card>
+
+      <TabBarSection />
 
       <Card>
         <CardHeader className="pb-2">

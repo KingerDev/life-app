@@ -45,8 +45,9 @@ export function HabitHeatmap({ days, color }: HabitHeatmapProps) {
                         className={cn(
                           'size-3.5 rounded-sm cursor-default transition-opacity',
                           day.isFuture && 'opacity-0 pointer-events-none',
-                          !day.isFuture && !day.completed && 'bg-muted',
-                          day.isToday && !day.completed && 'ring-1 ring-primary',
+                          !day.isFuture && !day.completed && day.isToday && 'bg-muted ring-1 ring-primary',
+                          !day.isFuture && !day.completed && !day.isToday && day.hasEntry && 'bg-red-500',
+                          !day.isFuture && !day.completed && !day.isToday && !day.hasEntry && 'bg-muted',
                         )}
                         style={
                           day.completed && !day.isFuture

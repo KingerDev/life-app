@@ -15,6 +15,8 @@ import {
 import Link from 'next/link';
 import { PRIORITY_OPTIONS } from '@/types/todos';
 import type { TodoPriority } from '@/types/todos';
+import { HABIT_ASPECTS } from '@/types/habits';
+import type { HabitAspectId } from '@/types/habits';
 import { cn } from '@/lib/utils';
 import {
   AlertDialog, AlertDialogAction, AlertDialogCancel,
@@ -39,6 +41,7 @@ export default function TodoDetailPage({ params }: { params: Promise<{ id: strin
   const [editDescription, setEditDescription] = useState('');
   const [editDueDate, setEditDueDate] = useState('');
   const [editPriority, setEditPriority] = useState<TodoPriority>('none');
+  const [editAspectId, setEditAspectId] = useState<HabitAspectId | ''>('');
 
   const startEditing = () => {
     if (!todo) return;
@@ -46,6 +49,7 @@ export default function TodoDetailPage({ params }: { params: Promise<{ id: strin
     setEditDescription(todo.description ?? '');
     setEditDueDate(todo.dueDate ?? '');
     setEditPriority(todo.priority);
+    setEditAspectId((todo.aspectId ?? '') as HabitAspectId | '');
     setIsEditing(true);
   };
 
@@ -64,6 +68,7 @@ export default function TodoDetailPage({ params }: { params: Promise<{ id: strin
       description: editDescription.trim() || undefined,
       dueDate: editDueDate || null,
       priority: editPriority,
+      aspectId: editAspectId || null,
     }),
     onSuccess: () => {
       setIsEditing(false);
@@ -94,6 +99,7 @@ export default function TodoDetailPage({ params }: { params: Promise<{ id: strin
   }
 
   const priorityOption = PRIORITY_OPTIONS.find(p => p.id === todo.priority) ?? PRIORITY_OPTIONS[0];
+  const aspectOption = todo.aspectId ? HABIT_ASPECTS.find(a => a.id === todo.aspectId) : null;
 
   return (
     <div className="space-y-6 max-w-2xl">
@@ -179,6 +185,14 @@ export default function TodoDetailPage({ params }: { params: Promise<{ id: strin
                   {formatDueDate(todo.dueDate)}
                 </span>
               )}
+              {aspectOption && (
+                <span
+                  className="text-xs font-medium px-2 py-1 rounded-full text-white"
+                  style={{ backgroundColor: aspectOption.color }}
+                >
+                  {aspectOption.label}
+                </span>
+              )}
               {todo.isCompleted && todo.completedAt && (
                 <span className="text-xs text-muted-foreground">
                   Splnené {new Date(todo.completedAt).toLocaleDateString('sk-SK')}
@@ -226,6 +240,27 @@ export default function TodoDetailPage({ params }: { params: Promise<{ id: strin
                       style={editPriority === option.id ? { backgroundColor: option.color } : {}}
                     >
                       {option.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+              <div className="space-y-1.5">
+                <label className="text-sm font-medium">Oblasť života</label>
+                <div className="flex gap-2 flex-wrap">
+                  {HABIT_ASPECTS.map(aspect => (
+                    <button
+                      key={aspect.id}
+                      type="button"
+                      onClick={() => setEditAspectId(editAspectId === aspect.id ? '' : aspect.id)}
+                      className={cn(
+                        'px-3 py-1.5 rounded-full text-xs border transition-all',
+                        editAspectId === aspect.id
+                          ? 'text-white border-transparent'
+                          : 'border-border text-muted-foreground hover:border-foreground/30'
+                      )}
+                      style={editAspectId === aspect.id ? { backgroundColor: aspect.color } : {}}
+                    >
+                      {aspect.label}
                     </button>
                   ))}
                 </div>

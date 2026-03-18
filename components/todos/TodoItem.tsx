@@ -8,6 +8,7 @@ import { cn } from '@/lib/utils';
 import { useApi } from '@/lib/hooks/useApi';
 import { getPriorityOption, formatDueDate, isOverdue } from '@/types/todos';
 import type { Todo, TodoTodayData } from '@/types/todos';
+import { HABIT_ASPECTS } from '@/types/habits';
 
 interface TodoItemProps {
   todo: Todo;
@@ -21,6 +22,7 @@ export function TodoItem({ todo, queryKey = ['todos', 'today'] }: TodoItemProps)
 
   const priorityOption = getPriorityOption(todo.priority);
   const overdue = isOverdue(todo);
+  const aspectOption = todo.aspectId ? HABIT_ASPECTS.find(a => a.id === todo.aspectId) : null;
 
   const toggleMutation = useMutation({
     mutationFn: async () => {
@@ -124,6 +126,14 @@ export function TodoItem({ todo, queryKey = ['todos', 'today'] }: TodoItemProps)
             )}>
               {formatDueDate(todo.dueDate)}
             </span>
+          )}
+          {/* Aspect dot */}
+          {aspectOption && (
+            <span
+              className="inline-block size-2 rounded-full shrink-0"
+              style={{ backgroundColor: aspectOption.color }}
+              title={aspectOption.label}
+            />
           )}
           {/* Subtasks count */}
           {todo.items && todo.items.length > 0 && (

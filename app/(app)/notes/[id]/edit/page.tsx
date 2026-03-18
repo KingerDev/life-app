@@ -138,6 +138,11 @@ export default function EditNotePage() {
         </CardContent>
       </Card>
 
+      {mutation.isError && (
+        <p className="text-sm text-destructive text-center">
+          Uloženie zlyhalo. Skontroluj pripojenie a skús znova.
+        </p>
+      )}
       <div className="flex gap-3">
         <Link href={`/notes/${id}`} className="flex-1">
           <Button variant="outline" className="w-full">Zrušiť</Button>

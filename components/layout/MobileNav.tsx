@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Menu, Home, Circle, Brain, FlaskConical, Target, CalendarCheck, CheckSquare } from 'lucide-react';
+import { Menu, Home, Circle, Brain, FlaskConical, Target, CalendarCheck, CheckSquare, FileText } from 'lucide-react';
 import { useState } from 'react';
 import { cn } from '@/lib/utils';
 import { useModulesStore } from '@/lib/store';
@@ -14,7 +14,7 @@ interface BottomNavItem {
   href: string;
   label: string;
   icon: React.ComponentType<{ className?: string }>;
-  moduleKey?: 'questsEnabled' | 'experimentsEnabled' | 'wheelEnabled' | 'beliefsEnabled' | 'habitsEnabled' | 'todosEnabled';
+  moduleKey?: 'questsEnabled' | 'experimentsEnabled' | 'wheelEnabled' | 'beliefsEnabled' | 'habitsEnabled' | 'todosEnabled' | 'notesEnabled';
 }
 
 const BOTTOM_NAV: BottomNavItem[] = [
@@ -24,6 +24,7 @@ const BOTTOM_NAV: BottomNavItem[] = [
   { href: '/habits', label: 'Návyky', icon: CalendarCheck, moduleKey: 'habitsEnabled' },
   { href: '/todos', label: 'Úlohy', icon: CheckSquare, moduleKey: 'todosEnabled' },
   { href: '/experiments', label: 'Exp.', icon: FlaskConical, moduleKey: 'experimentsEnabled' },
+  { href: '/notes', label: 'Poznámky', icon: FileText, moduleKey: 'notesEnabled' },
   { href: '/quests', label: 'Ciele', icon: Target, moduleKey: 'questsEnabled' },
 ];
 
@@ -32,9 +33,14 @@ export function MobileNav() {
   const modules = useModulesStore();
   const [open, setOpen] = useState(false);
 
-  const visibleItems = BOTTOM_NAV.filter(item =>
-    !item.moduleKey || modules[item.moduleKey]
-  ).slice(0, 5);
+  // Build tab bar: Home (always first) + user-pinned enabled items (max 4)
+  const pinnedEnabled = modules.tabBarPins
+    .map(href => BOTTOM_NAV.find(item => item.href === href))
+    .filter((item): item is BottomNavItem =>
+      !!item && (!item.moduleKey || !!modules[item.moduleKey])
+    )
+    .slice(0, 4);
+  const visibleItems = [BOTTOM_NAV[0], ...pinnedEnabled];
 
   return (
     <>
