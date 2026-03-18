@@ -15,7 +15,10 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
       <MobileNav />
 
       {/* Main content */}
-      <main className="lg:pl-64 pt-14 lg:pt-0 pb-20 lg:pb-0">
+      <main
+        className="lg:pl-64 pt-14 lg:pt-0 lg:pb-0"
+        style={{ paddingBottom: 'calc(5rem + env(safe-area-inset-bottom))' }}
+      >
         <div className="max-w-5xl mx-auto p-6">
           {children}
         </div>

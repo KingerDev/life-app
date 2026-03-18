@@ -61,27 +61,32 @@ export function MobileNav() {
       </div>
 
       {/* Mobile bottom nav */}
-      <nav className="lg:hidden fixed bottom-0 left-0 right-0 h-16 bg-card border-t border-border flex items-center justify-around px-2 z-40">
-        {visibleItems.map((item) => {
-          const isActive = item.href === '/'
-            ? pathname === '/'
-            : pathname.startsWith(item.href);
-          const Icon = item.icon;
+      <nav
+        className="lg:hidden fixed bottom-0 left-0 right-0 bg-card border-t border-border z-40"
+        style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}
+      >
+        <div className="h-16 flex items-center justify-around px-2">
+          {visibleItems.map((item) => {
+            const isActive = item.href === '/'
+              ? pathname === '/'
+              : pathname.startsWith(item.href);
+            const Icon = item.icon;
 
-          return (
-            <Link
-              key={item.href}
-              href={item.href}
-              className={cn(
-                'flex flex-col items-center gap-1 px-3 py-1 rounded-lg min-w-0 transition-colors',
-                isActive ? 'text-primary' : 'text-muted-foreground'
-              )}
-            >
-              <Icon className="size-5" />
-              <span className="text-xs truncate">{item.label}</span>
-            </Link>
-          );
-        })}
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={cn(
+                  'flex flex-col items-center gap-1 px-3 py-1 rounded-lg min-w-0 transition-colors',
+                  isActive ? 'text-primary' : 'text-muted-foreground'
+                )}
+              >
+                <Icon className="size-5" />
+                <span className="text-xs truncate">{item.label}</span>
+              </Link>
+            );
+          })}
+        </div>
       </nav>
     </>
   );
