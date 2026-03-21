@@ -126,7 +126,7 @@ export default function CreateNotePage() {
 
       {mutation.isError && (
         <p className="text-sm text-destructive text-center">
-          Uloženie zlyhalo. Skontroluj pripojenie a skús znova.
+          Uloženie zlyhalo ({(mutation.error as { response?: { status?: number } })?.response?.status ?? 'sieť'}). Skontroluj pripojenie a skús znova.
         </p>
       )}
       <div className="flex gap-3">

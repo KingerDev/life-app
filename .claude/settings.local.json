@@ -38,7 +38,8 @@
       "Bash(__NEW_LINE_5e9b1448eda01f52__ node:*)",
       "Bash(composer require:*)",
       "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:8000/api/notes)",
-      "Bash(npm run:*)"
+      "Bash(npm run:*)",
+      "Bash(pkill -f \"next dev\")"
     ]
   }
 }
